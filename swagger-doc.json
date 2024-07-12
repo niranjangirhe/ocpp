@@ -1819,6 +1819,12 @@
             "format": "int64",
             "example": 1500653279
           },
+          "plugTimeInSeconds":{
+            "title":"Plug Time",
+            "type":"integer",
+            "format":"int64",
+            "example": 5561
+          },
           "chargerId": {
             "title": "Charger id",
             "type": "integer",
@@ -2028,10 +2034,10 @@
       "RawOperation": {
         "type": "object",
         "properties": {
-          "response": {
+          "status": {
             "title": "Response message",
             "type": "string",
-            "example": "{\"status\":\"Accepted\"}"
+            "example": "SUCCESS"
           }
         }
       },
