@@ -12,6 +12,121 @@
         }
     ],
     "paths": {
+        "/v1/authentication/operator/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Operator login",
+                "description": "Logs in an operator using the operator’s username and password",
+                "operationId": "operatorLogin",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-API-Key",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "API key for authentication"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperatorLoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ValidationResponse"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/FieldValidationResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseResponse"
+                                },
+                                "example": {
+                                    "requestId": "3ztRixFIk7",
+                                    "code": "api-gateway-403",
+                                    "reason": "invalid.ticket",
+                                    "message": "Invalid ticket",
+                                    "httpStatusCode": 403
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseResponse"
+                                },
+                                "example": {
+                                    "requestId": "uP6XD6gMcK",
+                                    "code": "api-gateway-404",
+                                    "reason": "entity.not.found",
+                                    "message": "Entity not found",
+                                    "httpStatusCode": 404,
+                                    "errors": [
+                                        {
+                                            "code": "api-gateway-404",
+                                            "reason": "billing.transaction.not.found",
+                                            "message": "Billing transaction not found"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseResponse"
+                                },
+                                "example": {
+                                    "requestId": "gmBLt3ozyq",
+                                    "code": "api-gateway-500",
+                                    "reason": "internal.error",
+                                    "message": "Unknown error",
+                                    "httpStatusCode": 500,
+                                    "errors": [
+                                        {
+                                            "code": "api-gateway-500",
+                                            "reason": "internal.error",
+                                            "message": "Unknown error"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v1/chargers/statuses/filter": {
             "post": {
                 "tags": [
@@ -2416,6 +2531,76 @@
                         "type": "string",
                         "description": "The name of the charger host",
                         "example": "Antwerpen chargers"
+                    }
+                }
+            },
+            "LoginResponse": {
+                "type": "object",
+                "properties": {
+                    "ticket": {
+                        "title": "Ticket",
+                        "type": "string",
+                        "example": "12399b0e-v2908-4e32-9279-c47d9760124c"
+                    }
+                }
+            },
+            "OperatorLoginResponse": {
+                "required": [
+                    "code",
+                    "count",
+                    "data",
+                    "httpStatusCode",
+                    "message",
+                    "reason",
+                    "requestId"
+                ],
+                "type": "object",
+                "properties": {
+                    "requestId": {
+                        "title": "Request id",
+                        "type": "string",
+                        "example": "1234567"
+                    },
+                    "code": {
+                        "title": "Code",
+                        "type": "string",
+                        "example": "string"
+                    },
+                    "reason": {
+                        "title": "Reason",
+                        "type": "string",
+                        "example": "string"
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "example": "string"
+                    },
+                    "messages": {
+                        "title": "List of additional messages",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Message"
+                        }
+                    },
+                    "httpStatusCode": {
+                        "title": "Http status code",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 200
+                    },
+                    "count": {
+                        "title": "Number of entities returned",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                    },
+                    "data": {
+                        "title": "Entities data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LoginResponse"
+                        }
                     }
                 }
             },
