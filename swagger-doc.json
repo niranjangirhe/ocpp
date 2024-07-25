@@ -7,8 +7,8 @@
     },
     "servers": [
         {
-            "url": "http://52.156.223.251/api-gateway",
-            "description": "Proxy server url"
+            "url": "https://example.domain.com/api-gateway",
+            "description": "Generated server url"
         }
     ],
     "paths": {
