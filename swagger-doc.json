@@ -242,7 +242,7 @@
                 ]
             }
         },
-        "/v1/chargers/connectors/{connectorId}/remote-operations/unlock": {
+        "/v1/chargers/connectors/{connectorId}/remote-operations/stop-transaction": {
             "post": {
                 "tags": [
                     "Charger Remote Operations"
@@ -364,155 +364,22 @@
                 ]
             }
         },
-        "/v1/chargers/connectors/{connectorId}/remote-operations/start-transaction": {
-            "post": {
-                "tags": [
-                    "Charger Remote Operations"
-                ],
-                "summary": "Send start transaction message",
-                "description": "Send start transaction message",
-                "operationId": "startTransaction",
-                "parameters": [
-                    {
-                        "name": "connectorId",
-                        "in": "path",
-                        "description": "connectorId",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        },
-                        "example": 2
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/StartTransactionRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RawOperationResponse"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "oneOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ValidationResponse"
-                                        },
-                                        {
-                                            "$ref": "#/components/schemas/FieldValidationResponse"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/BaseResponse"
-                                },
-                                "example": {
-                                    "requestId": "uJA2fO6Gip",
-                                    "code": "api-gateway-403",
-                                    "reason": "invalid.ticket",
-                                    "message": "Invalid ticket",
-                                    "httpStatusCode": 403
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/BaseResponse"
-                                },
-                                "example": {
-                                    "requestId": "iacoYNb1Du",
-                                    "code": "api-gateway-404",
-                                    "reason": "entity.not.found",
-                                    "message": "Entity not found",
-                                    "httpStatusCode": 404,
-                                    "errors": [
-                                        {
-                                            "code": "api-gateway-404",
-                                            "reason": "billing.transaction.not.found",
-                                            "message": "Billing transaction not found"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/BaseResponse"
-                                },
-                                "example": {
-                                    "requestId": "QuBfuwUBaC",
-                                    "code": "api-gateway-500",
-                                    "reason": "internal.error",
-                                    "message": "Unknown error",
-                                    "httpStatusCode": 500,
-                                    "errors": [
-                                        {
-                                            "code": "api-gateway-500",
-                                            "reason": "internal.error",
-                                            "message": "Unknown error"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "dmsTicket": []
-                    }
-                ]
-            }
-        },
-        "/v1/chargers/connectors/{connectorId}/remote-operations/stop-transaction": {
+       "/v1/chargers/evses/{evseId}/remote-operations/start-transaction-by-card-number": {
             "patch": {
                 "tags": [
                     "Charger Remote Operations"
                 ],
-                "summary": "Send stop transaction message",
-                "description": "Send stop transaction message",
-                "operationId": "stopTransaction",
+                "summary": "Send start EVSE transaction command with card number",
+                "description": "Sends a start EVSE transaction command using the driver's RFID card number",
+                "operationId": "startEvseTransactionByCardNumber",
                 "parameters": [
                     {
-                        "name": "connectorId",
+                        "name": "evseId",
                         "in": "path",
                         "description": "connectorId",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "string"
                         },
                         "example": 2
                     }
@@ -521,7 +388,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/StopTransactionRequest"
+                                "$ref": "#/components/schemas/StartTransactionByCardNumberRequest"
                             }
                         }
                     },
@@ -533,7 +400,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/RawOperationResponse"
+                                    "$ref": "#/components/schemas/StartTransactionResponse"
                                 }
                             }
                         }
@@ -563,7 +430,7 @@
                                     "$ref": "#/components/schemas/BaseResponse"
                                 },
                                 "example": {
-                                    "requestId": "UeiXDX7Z9O",
+                                    "requestId": "zrEEMnCHwS",
                                     "code": "api-gateway-403",
                                     "reason": "invalid.ticket",
                                     "message": "Invalid ticket",
@@ -580,7 +447,7 @@
                                     "$ref": "#/components/schemas/BaseResponse"
                                 },
                                 "example": {
-                                    "requestId": "G6f82379wU",
+                                    "requestId": "dffkFP6a0d",
                                     "code": "api-gateway-404",
                                     "reason": "entity.not.found",
                                     "message": "Entity not found",
@@ -604,7 +471,7 @@
                                     "$ref": "#/components/schemas/BaseResponse"
                                 },
                                 "example": {
-                                    "requestId": "Uzlo5JGPj1",
+                                    "requestId": "zIv7AD22Yv",
                                     "code": "api-gateway-500",
                                     "reason": "internal.error",
                                     "message": "Unknown error",
@@ -724,6 +591,270 @@
                                 },
                                 "example": {
                                     "requestId": "zo2kdqItrY",
+                                    "code": "api-gateway-500",
+                                    "reason": "internal.error",
+                                    "message": "Unknown error",
+                                    "httpStatusCode": 500,
+                                    "errors": [
+                                        {
+                                            "code": "api-gateway-500",
+                                            "reason": "internal.error",
+                                            "message": "Unknown error"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "dmsTicket": []
+                    }
+                ]
+            }
+        },
+        "/v1/chargers/{id}/profile": {
+            "get": {
+                "tags": [
+                    "Chargers"
+                ],
+                "summary": "Get charger’s profile details",
+                "description": "Gets a charger’s profile details",
+                "operationId": "getChargerProfile",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "requestedFields",
+                        "in": "query",
+                        "description": "The returned response values:\n* CAPTION",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChargerProfileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ValidationResponse"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/FieldValidationResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseResponse"
+                                },
+                                "example": {
+                                    "requestId": "TATNs3mHh2",
+                                    "code": "api-gateway-403",
+                                    "reason": "invalid.ticket",
+                                    "message": "Invalid ticket",
+                                    "httpStatusCode": 403
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseResponse"
+                                },
+                                "example": {
+                                    "requestId": "xfj1hKyswN",
+                                    "code": "api-gateway-404",
+                                    "reason": "entity.not.found",
+                                    "message": "Entity not found",
+                                    "httpStatusCode": 404,
+                                    "errors": [
+                                        {
+                                            "code": "api-gateway-404",
+                                            "reason": "billing.transaction.not.found",
+                                            "message": "Billing transaction not found"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseResponse"
+                                },
+                                "example": {
+                                    "requestId": "L9S3Dp96No",
+                                    "code": "api-gateway-500",
+                                    "reason": "internal.error",
+                                    "message": "Unknown error",
+                                    "httpStatusCode": 500,
+                                    "errors": [
+                                        {
+                                            "code": "api-gateway-500",
+                                            "reason": "internal.error",
+                                            "message": "Unknown error"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "dmsTicket": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Chargers"
+                ],
+                "summary": "Update charger's profile details",
+                "description": "Updates a charger’s profile details",
+                "operationId": "updateChargerProfile",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChargerProfileUpdate"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChargerProfileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ValidationResponse"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/FieldValidationResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseResponse"
+                                },
+                                "example": {
+                                    "requestId": "fa7Pot1pPn",
+                                    "code": "api-gateway-403",
+                                    "reason": "invalid.ticket",
+                                    "message": "Invalid ticket",
+                                    "httpStatusCode": 403
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseResponse"
+                                },
+                                "example": {
+                                    "requestId": "kq837Des1N",
+                                    "code": "api-gateway-404",
+                                    "reason": "entity.not.found",
+                                    "message": "Entity not found",
+                                    "httpStatusCode": 404,
+                                    "errors": [
+                                        {
+                                            "code": "api-gateway-404",
+                                            "reason": "billing.transaction.not.found",
+                                            "message": "Billing transaction not found"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseResponse"
+                                },
+                                "example": {
+                                    "requestId": "VhWKqcdqiw",
                                     "code": "api-gateway-500",
                                     "reason": "internal.error",
                                     "message": "Unknown error",
@@ -1042,103 +1173,753 @@
                     }
                 }
             },
-            "EvTransactionFilter": {
+            "ChargerProfileResponse": {
                 "required": [
-                    "transactionBillingStatus"
+                    "count",
+                    "data",
+                    "httpStatusCode",
+                    "requestId"
                 ],
                 "type": "object",
                 "properties": {
-                    "ids": {
-                        "title": "EV transaction IDs",
-                        "maxItems": 20,
-                        "minItems": 1,
-                        "uniqueItems": true,
+                    "requestId": {
+                        "title": "Request id",
+                        "type": "string",
+                        "example": "1234567"
+                    },
+                    "messages": {
+                        "title": "List of additional messages",
                         "type": "array",
-                        "description": "The EV transaction IDs to search for",
-                        "example": [
-                            61035,
-                            61038
-                        ],
                         "items": {
-                            "title": "EV transaction IDs",
-                            "type": "integer",
-                            "description": "The EV transaction IDs to search for",
-                            "format": "int64"
+                            "$ref": "#/components/schemas/Message"
                         }
                     },
-                    "accountNumber": {
-                        "title": "Account number",
+                    "httpStatusCode": {
+                        "title": "Http status code",
                         "type": "integer",
-                        "description": "The account number",
                         "format": "int32",
-                        "example": 10
+                        "example": 200
                     },
-                    "fromDate": {
-                        "title": "From date",
+                    "count": {
+                        "title": "Number of entities returned",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                    },
+                    "data": {
+                        "title": "Entities data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ChargerProfile"
+                        }
+                    }
+                }
+            },
+            "ChargerProfileUpdate": {
+                "type": "object",
+                "properties": {
+                    "caption": {
+                        "title": "Caption",
+                        "maxLength": 255,
+                        "minLength": 1,
                         "type": "string",
-                        "description": "The start date for the search, in epoch time",
-                        "format": "date-time"
+                        "description": "The name of the charger",
+                        "example": "NCAN177DC1"
                     },
-                    "toDate": {
-                        "title": "To date",
+                    "identityKey": {
+                        "title": "Identity key",
+                        "maxLength": 255,
+                        "minLength": 1,
                         "type": "string",
-                        "description": "The end date for the search, in epoch time",
-                        "format": "date-time"
+                        "description": "The identity key of the charger, which is used by the system to communicate with it",
+                        "example": "S0000000009"
                     },
-                    "chargerIds": {
-                        "title": "Charger IDs",
-                        "maxItems": 20,
-                        "minItems": 1,
+                    "externalId": {
+                        "title": "External ID",
+                        "maxLength": 50,
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "The unique identifier of the charger from an external source",
+                        "example": "a1d2f"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "maxLength": 2000,
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "A description of the charger",
+                        "example": "Charger description"
+                    },
+                    "siteId": {
+                        "title": "Site ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the site",
+                        "format": "int64",
+                        "example": 12
+                    },
+                    "modelId": {
+                        "title": "Model ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the charger model",
+                        "format": "int64",
+                        "example": 4
+                    },
+                    "protocolId": {
+                        "title": "Protocol ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the charger model protocol",
+                        "format": "int64",
+                        "example": 123424
+                    },
+                    "serialNumber": {
+                        "title": "Serial number",
+                        "maxLength": 45,
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "The serial number of the charger used by OCPP",
+                        "example": "NSQC442E-002077"
+                    },
+                    "additionalSerialNumber": {
+                        "title": "Additional serial number",
+                        "maxLength": 50,
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "Any additional serial number that is relevant",
+                        "example": "A-12345"
+                    },
+                    "contactPersonId": {
+                        "title": "Contact person ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the contact person for the charger",
+                        "format": "int64",
+                        "example": 361345
+                    },
+                    "accessLevel": {
+                        "title": "Access level",
+                        "pattern": "(USE_SITE|PUBLIC|PRIVATE|TAXI_ONLY)",
+                        "type": "string",
+                        "description": "The access level of the charger. Options are:\n* USE_SITE\n* PUBLIC\n* PRIVATE\n* TAXI_ONLY",
+                        "example": "PUBLIC"
+                    },
+                    "showIn3rdPartyFilter": {
+                        "title": "Show in 3rd-party filter",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger appears in 3rd-party filters, even if it is managed by the system",
+                        "example": true
+                    },
+                    "hidden": {
+                        "title": "Hidden",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger is hidden from driver maps",
+                        "example": true
+                    },
+                    "excluded": {
+                        "title": "Excluded",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger is excluded from charger analysis, meaning it will not be displayed in dashboards and reports",
+                        "example": false
+                    },
+                    "disabled": {
+                        "title": "Disabled",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger is disabled. This means that it is hidden from driver maps and excluded from charger analysis.",
+                        "example": true
+                    },
+                    "managed": {
+                        "title": "Managed",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger is managed by the system",
+                        "example": false
+                    },
+                    "ignoreStatusNotifications": {
+                        "title": "Ignore status notifications",
+                        "type": "boolean",
+                        "description": "Indicates whether incoming status notifications are ignored",
+                        "example": true
+                    },
+                    "authenticationMethods": {
+                        "title": "Authentication methods",
                         "uniqueItems": true,
                         "type": "array",
-                        "description": "The charger IDs",
+                        "description": "The authentication methods supported by the charger. Options are:\n* NONE\n* RFID_CLASSIC\n* SMS\n* APP\n* CALL\n* PARK_AND_CHARGE\n* RFID_DES_FIRE\n* PLUG_AND_CHARGE\n* DIRECT_PAYMENT\n* CONTACTLESS_CARD",
                         "example": [
-                            12,
-                            58
+                            "SMS"
                         ],
                         "items": {
-                            "title": "Charger IDs",
-                            "type": "integer",
-                            "description": "The charger IDs",
-                            "format": "int64"
+                            "title": "Authentication methods",
+                            "pattern": "(NONE|RFID_CLASSIC|SMS|APP|CALL|PARK_AND_CHARGE|RFID_DES_FIRE|PLUG_AND_CHARGE|DIRECT_PAYMENT|CONTACTLESS_CARD)",
+                            "type": "string",
+                            "description": "The authentication methods supported by the charger. Options are:\n* NONE\n* RFID_CLASSIC\n* SMS\n* APP\n* CALL\n* PARK_AND_CHARGE\n* RFID_DES_FIRE\n* PLUG_AND_CHARGE\n* DIRECT_PAYMENT\n* CONTACTLESS_CARD",
+                            "example": "[\"SMS\"]"
                         }
                     },
-                    "connectorIds": {
-                        "title": "Connector IDs",
-                        "maxItems": 20,
-                        "minItems": 1,
+                    "paymentMethods": {
+                        "title": "Payment methods",
                         "uniqueItems": true,
                         "type": "array",
-                        "description": "The connector IDs",
+                        "description": "The payment methods supported by the charger. Options are:\n* FREE\n* CARD\n* PARK_ANDA_CHARGE\n* SMS\n* CALL\n* CONTRACT\n* PLUG_AND_CHARGE",
                         "example": [
-                            25462,
-                            25490
+                            "SMS"
                         ],
                         "items": {
-                            "title": "Connector IDs",
-                            "type": "integer",
-                            "description": "The connector IDs",
-                            "format": "int64"
+                            "title": "Payment methods",
+                            "pattern": "(FREE|CARD|PARK_AND_CHARGE|SMS|CALL|CONTRACT|PLUG_AND_CHARGE)",
+                            "type": "string",
+                            "description": "The payment methods supported by the charger. Options are:\n* FREE\n* CARD\n* PARK_ANDA_CHARGE\n* SMS\n* CALL\n* CONTRACT\n* PLUG_AND_CHARGE",
+                            "example": "[\"SMS\"]"
                         }
                     },
-                    "evseId": {
-                        "title": "EVSE ID",
+                    "authenticationMode": {
+                        "title": "Authentication mode",
+                        "pattern": "(SERVER_AUTHENTICATION|FREE_VEND)",
                         "type": "string",
-                        "description": "The unique identifier of the EVSE",
-                        "example": "US*EVG*E9*9"
+                        "description": "The authentication mode. Options are:\n* SERVER_AUTHENTICATION\n* FREE_VEND",
+                        "example": "SERVER_AUTHENTICATION"
                     },
-                    "transactionBillingStatus": {
-                        "title": "Transaction billing status",
-                        "pattern": "(FINAL_COST)",
+                    "equipmentId": {
+                        "title": "Equipment ID",
+                        "maxLength": 250,
+                        "minLength": 1,
                         "type": "string",
-                        "description": "The billing status of the transaction. This will always be FINAL_COST.",
-                        "example": "FINAL_COST",
-                        "enum": [
-                            "FINAL_COST"
-                        ]
+                        "description": "The equipment ID",
+                        "example": "223"
+                    },
+                    "controllerId": {
+                        "title": "Controller ID",
+                        "maxLength": 250,
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "The controller ID",
+                        "example": "S0000000009"
+                    },
+                    "erpId": {
+                        "title": "ERP ID",
+                        "maxLength": 50,
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "The identifier of the charger in the ERP system",
+                        "example": "12"
+                    },
+                    "costCenter": {
+                        "title": "Cost center",
+                        "maxLength": 50,
+                        "minLength": 1,
+                        "type": "string",
+                        "description": "The cost center of the charger",
+                        "example": "B-CH"
+                    },
+                    "infrastructureCompanyId": {
+                        "title": "Infrastructure company ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the infrastructure operator",
+                        "format": "int64",
+                        "example": 21
+                    },
+                    "utilityCompanyId": {
+                        "title": "Utility company ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the utility company that services the charger",
+                        "format": "int64",
+                        "example": 35
                     }
                 },
-                "description": "The filter object used to search for EV transactions"
+                "description": "The object used to update a charger profile"
+            },
+            "ChargerProfile": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Charger ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the charger",
+                        "format": "int64",
+                        "example": 122345
+                    },
+                    "identityKey": {
+                        "title": "Identity key",
+                        "type": "string",
+                        "description": "The identity key of the charger, which is used by the system to communicate with it",
+                        "example": "S0000000009"
+                    },
+                    "caption": {
+                        "title": "Caption",
+                        "type": "string",
+                        "description": "The name of the charger",
+                        "example": "NCAN177DC1"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "type": "string",
+                        "description": "A description of the charger",
+                        "example": "Charger description"
+                    },
+                    "externalId": {
+                        "title": "External ID",
+                        "type": "string",
+                        "description": "The unique identifier of the charger from an external source",
+                        "example": "a1d2f"
+                    },
+                    "chargerHostId": {
+                        "title": "Charger host ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the charger host",
+                        "format": "int64",
+                        "example": 673234
+                    },
+                    "siteId": {
+                        "title": "Site ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the site",
+                        "format": "int64",
+                        "example": 12
+                    },
+                    "modelId": {
+                        "title": "Model ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the charger model",
+                        "format": "int64",
+                        "example": 13
+                    },
+                    "additionalSerialNumber": {
+                        "title": "Additional serial number",
+                        "type": "string",
+                        "description": "Any additional serial number that is relevant",
+                        "example": "A-12345"
+                    },
+                    "contactPersonId": {
+                        "title": "Contact person ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the contact person for the charger",
+                        "format": "int64",
+                        "example": 361345
+                    },
+                    "accessLevel": {
+                        "title": "Access level",
+                        "type": "string",
+                        "description": "The access level of the charger. Options are:\n* USE_SITE - use site access level\n* PUBLIC\n* PRIVATE\n* TAXI_ONLY",
+                        "example": "PUBLIC"
+                    },
+                    "showIn3rdPartyFilter": {
+                        "title": "Show in 3rd-party filter",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger appears in 3rd-party filters, even if it is managed by the system",
+                        "example": true
+                    },
+                    "hidden": {
+                        "title": "Hidden",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger is hidden from driver maps",
+                        "example": true
+                    },
+                    "excluded": {
+                        "title": "Excluded",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger is excluded from charger analysis, meaning it will not be displayed in dashboards and reports",
+                        "example": false
+                    },
+                    "disabled": {
+                        "title": "Disabled",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger is disabled. This means that it is hidden from driver maps and excluded from charger analysis.",
+                        "example": true
+                    },
+                    "managed": {
+                        "title": "Managed",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger is managed by the system",
+                        "example": false
+                    },
+                    "authenticationMode": {
+                        "title": "Authentication mode",
+                        "type": "string",
+                        "description": "The authentication mode. Options are:\n* SERVER_AUTHENTICATION\n* FREE_VEND",
+                        "example": "SERVER_AUTHENTICATION"
+                    },
+                    "authenticationMethods": {
+                        "title": "Authentication methods",
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "The authentication methods supported by the charger. Options are: \n* NONE\n* RFID_CLASSIC\n* SMS\n* APP\n* CALL\n* PARK_AND_CHARGE\n* RFID_DES_FIRE\n* PLUG_AND_CHARGE\n* DIRECT_PAYMENT\n* CONTACTLESS_CARD",
+                        "example": "SMS",
+                        "items": {
+                            "title": "Authentication methods",
+                            "type": "string",
+                            "description": "The authentication methods supported by the charger. Options are: \n* NONE\n* RFID_CLASSIC\n* SMS\n* APP\n* CALL\n* PARK_AND_CHARGE\n* RFID_DES_FIRE\n* PLUG_AND_CHARGE\n* DIRECT_PAYMENT\n* CONTACTLESS_CARD",
+                            "example": "SMS"
+                        }
+                    },
+                    "fundingSource": {
+                        "title": "Funding source",
+                        "type": "string",
+                        "description": "The funding source or program for the charger. Options are:\n* BAAQMD\n* CA_SETTLEMENT\n* CA_SETTLEMENT_RND\n* CEC_2014\n* CEC_2015\n* CEC_2016\n* GREEN_MOUNTAIN_POWER\n* HOST_FUNDED\n* MBARD\n* NEDO\n* NNA_EVA\n* NNA_JMA\n* EVGO_FUNDED\n* SANBAG_2016\n* SCAQMD\n* VW_EA\n* TBD",
+                        "example": "HOST_FUNDED"
+                    },
+                    "paymentMethods": {
+                        "title": "Payment methods",
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "The payment methods supported by the charger. Options are:\n* FREE\n* CARD\n* PARK_AND_CHARGE\n* SMS\n* CALL\n* CONTRACT\n* PLUG_AND_CHARGE",
+                        "example": "PARK_AND_CHARGE",
+                        "items": {
+                            "title": "Payment methods",
+                            "type": "string",
+                            "description": "The payment methods supported by the charger. Options are:\n* FREE\n* CARD\n* PARK_AND_CHARGE\n* SMS\n* CALL\n* CONTRACT\n* PLUG_AND_CHARGE",
+                            "example": "PARK_AND_CHARGE"
+                        }
+                    },
+                    "ignoreStatusNotifications": {
+                        "title": "Ignore status notifications",
+                        "type": "boolean",
+                        "description": "Indicates whether incoming status notifications are ignored",
+                        "example": true
+                    },
+                    "inMaintenance": {
+                        "title": "In maintenance",
+                        "type": "boolean",
+                        "description": "Indicates whether the charger is in maintenance",
+                        "example": true
+                    },
+                    "status": {
+                        "title": "Status",
+                        "type": "string",
+                        "description": "The charger status. Options are:\n* AVAILABLE\n* OCCUPIED\n* FAULTED\n* UNAVAILABLE\n* NEW\n* UNKNOWN\n* RESERVED\n* IN_PROVISION\n* CHARGING\n* DISCHARGING\n* PAUSED\n* PREPARING\n* FINISHING",
+                        "example": "UNAVAILABLE"
+                    },
+                    "provisionStatus": {
+                        "title": "provisionStatus",
+                        "type": "string",
+                        "description": "\n* Specifies the charger current provision status\n* ORDERED\n* IN_STOCK\n* READY_FOR_INSTALLATION\n* INSTALLED\n* CONNECTED\n* READY_FOR_PROVISIONING\n* PROVISIONED\n* SCHEDULED_FOR_DECOMMISSIONING\n* DECOMMISSIONED\n* DENETWORKED\n* IN_CONSTRUCTION\n* IN_INSTALLATION",
+                        "example": "UNAVAILABLE"
+                    },
+                    "serialNumber": {
+                        "title": "Serial number",
+                        "type": "string",
+                        "description": "The serial number of the charger used by OCPP",
+                        "example": "NSQC442E-002077"
+                    },
+                    "controllerId": {
+                        "title": "Controller ID",
+                        "type": "string",
+                        "description": "The controller ID",
+                        "example": "S0000000009"
+                    },
+                    "erpId": {
+                        "title": "ERP ID",
+                        "type": "string",
+                        "description": "The identifier of the charger in the ERP system",
+                        "example": "12"
+                    },
+                    "equipmentId": {
+                        "title": "Equipment ID",
+                        "type": "string",
+                        "description": "The equipment ID",
+                        "example": "223"
+                    },
+                    "costCenter": {
+                        "title": "Cost center",
+                        "type": "string",
+                        "description": "The cost center of the charger",
+                        "example": "B-CH"
+                    },
+                    "chargingSpeed": {
+                        "title": "Charge speed",
+                        "type": "string",
+                        "description": "The speed of the charger. Options are:\n* SLOW\n* SEMI_FAST\n* FAST\n* ULTRA_FAST",
+                        "example": "FAST"
+                    },
+                    "usageStartDate": {
+                        "title": "Usage start date",
+                        "type": "integer",
+                        "description": "The date the charger started being used, in epoch time",
+                        "format": "int64",
+                        "example": 1617010000
+                    },
+                    "lastFirmwareUpdateDate": {
+                        "title": "Last firmware update date",
+                        "type": "integer",
+                        "description": "The date of the last firmware update, in epoch time",
+                        "format": "int64",
+                        "example": 1217010000
+                    },
+                    "evses": {
+                        "title": "EVSEs",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Evse"
+                        }
+                    },
+                    "infrastructureCompany": {
+                        "$ref": "#/components/schemas/Company"
+                    },
+                    "utilityCompany": {
+                        "$ref": "#/components/schemas/Company"
+                    },
+                    "groupIds": {
+                        "title": "Group IDs",
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "The IDs of groups that include this charger",
+                        "example": [
+                            1,
+                            3,
+                            5
+                        ],
+                        "items": {
+                            "title": "Group IDs",
+                            "type": "integer",
+                            "description": "The IDs of groups that include this charger",
+                            "format": "int64"
+                        }
+                    },
+                    "customerAccountNumbers": {
+                        "title": "Customer account numbers",
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "The account numbers of customers that can charge on this charger",
+                        "example": [
+                            361345,
+                            45635
+                        ],
+                        "items": {
+                            "title": "Customer account numbers",
+                            "type": "integer",
+                            "description": "The account numbers of customers that can charge on this charger",
+                            "format": "int32"
+                        }
+                    }
+                }
+            },
+            "Company": {
+                "title": "Company details",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Company ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the company",
+                        "format": "int64",
+                        "example": 122345
+                    },
+                    "name": {
+                        "title": "Company name",
+                        "type": "string",
+                        "description": "The name of the company",
+                        "example": "Bezeq Int."
+                    },
+                    "businessId": {
+                        "title": "Business id",
+                        "type": "string",
+                        "description": "Business id",
+                        "example": "hEZPtUJFDBMNBab"
+                    },
+                    "code": {
+                        "title": "Company code",
+                        "type": "string",
+                        "description": "The company code",
+                        "example": "33221"
+                    },
+                    "phoneNumber": {
+                        "title": "Company phone number",
+                        "type": "string",
+                        "description": "The phone number of the company",
+                        "example": "*0144"
+                    },
+                    "type": {
+                        "title": "Company type",
+                        "type": "string",
+                        "description": "* Specifies the company type\n* UNKNOWN\n* INSTALLER\n* MANUFACTURER\n* STATION_HOST\n* PROPERTY_OWNER\n* UTILITY_COMPANY\n* RFID_CARD_SUPPLIER\n* WIRELESS_CARRIER\n* SERVICE_PROVIDER\n* SERVICE_COMPANY\n* OEM\n* PROPERTY_OWNER_FREEDOM_STATION\n* BUILDING_OWNER\n* BUILDING_OWNER_FREEDOM_STATION\n* CONTRACTOR\n* EV_DRIVER\n* RETAIL_PROPERTY\n* TENANT\n* AUTO_DEALERSHIP\n* PROJECT_COMPANY",
+                        "example": "INSTALLER"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "contactPeople": {
+                        "title": "Contact person details",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ContactPerson"
+                        }
+                    },
+                    "invoiceLogoFileName": {
+                        "title": "Invoice logo file name",
+                        "type": "string",
+                        "description": "Invoice logo file name",
+                        "example": "logo.png"
+                    },
+                    "accountManagerId": {
+                        "title": "Account manager id",
+                        "type": "integer",
+                        "description": "Account manager id",
+                        "format": "int64",
+                        "example": 123
+                    },
+                    "faxNumber": {
+                        "title": "Fax number",
+                        "type": "string",
+                        "description": "Fax number",
+                        "example": "+972548796315"
+                    },
+                    "hotlineFaxNumber": {
+                        "title": "Hotline fax number",
+                        "type": "string",
+                        "description": "Hotline fax number",
+                        "example": "+972548796315"
+                    },
+                    "hotlinePhoneNumber": {
+                        "title": "Hotline phone number",
+                        "type": "string",
+                        "description": "Hotline phone number",
+                        "example": "+972548796315"
+                    },
+                    "websiteUrl": {
+                        "title": "Website url",
+                        "type": "string",
+                        "description": "Website url",
+                        "example": "www.example.com"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "type": "string",
+                        "description": "Company Email",
+                        "example": "example@gmial.com"
+                    },
+                    "nameOnInvoice": {
+                        "title": "Name on invoice",
+                        "type": "string",
+                        "description": "Name on invoice",
+                        "example": "Israel Israeli"
+                    },
+                    "taxIdNumber": {
+                        "title": "Tax ID",
+                        "type": "string",
+                        "description": "Tax id number",
+                        "example": "123"
+                    }
+                }
+            },
+            "Address": {
+                "title": "Billing address details",
+                "type": "object",
+                "properties": {
+                    "address1": {
+                        "title": "Address",
+                        "type": "string",
+                        "example": "Haharash 4"
+                    },
+                    "address2": {
+                        "title": "Address2",
+                        "type": "string",
+                        "example": "Bldg D Mail Drop: D303"
+                    },
+                    "city": {
+                        "title": "City",
+                        "type": "string",
+                        "example": "Hod Hasharon"
+                    },
+                    "zipCode": {
+                        "title": "Zipcode",
+                        "type": "string",
+                        "example": "2134456"
+                    },
+                    "countryCode": {
+                        "title": "Country code",
+                        "type": "string",
+                        "example": "ISR"
+                    },
+                    "stateCode": {
+                        "title": "USA state code",
+                        "type": "string",
+                        "example": "NY"
+                    },
+                    "zoneId": {
+                        "title": "Timezone id",
+                        "type": "string",
+                        "example": "America/New_York"
+                    },
+                    "market": {
+                        "title": "Market",
+                        "type": "string",
+                        "example": "JACKSONVILLE - 525"
+                    },
+                    "municipality": {
+                        "title": "Municipality",
+                        "type": "string",
+                        "example": "Worcester"
+                    },
+                    "region": {
+                        "title": "Region",
+                        "type": "string",
+                        "example": "South Atlantic"
+                    },
+                    "houseNumber": {
+                        "title": "House number",
+                        "type": "string",
+                        "example": "12A"
+                    }
+                }
+            },
+            "ContactPerson": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the contact person",
+                        "format": "int64",
+                        "example": 111
+                    },
+                    "firstName": {
+                        "title": "First name",
+                        "type": "string",
+                        "description": "The first name of the contact person",
+                        "example": "John"
+                    },
+                    "lastName": {
+                        "title": "Last name",
+                        "type": "string",
+                        "description": "The last name of the contact person",
+                        "example": "Doe"
+                    },
+                    "mobilePhoneNumber": {
+                        "title": "Mobile phone number",
+                        "type": "string",
+                        "description": " The mobile phone number of the contact person",
+                        "example": "+972541234568"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "type": "string",
+                        "description": "The email address of the contact person",
+                        "example": "john.doe@driivz.com"
+                    },
+                    "shippingAddress": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "billingAddress": {
+                        "$ref": "#/components/schemas/Address"
+                    },
+                    "companies": {
+                        "title": "Companies",
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ContactPersonCompany"
+                        }
+                    }
+                }
+            },
+            "ContactPersonCompany": {
+                "title": "Companies",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Company ID",
+                        "type": "integer",
+                        "description": "The unique identifier of the company that the contact person is associated with",
+                        "format": "int64",
+                        "example": 122345
+                    }
+                }
             },
             "ChargerStatusResponse": {
                 "required": [
@@ -1260,19 +2041,71 @@
                     }
                 }
             },
-            "StartTransactionRequest": {
+            "StartTransaction": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "title": "Status",
+                        "type": "string",
+                        "description": "The start transaction status. Options are:\n* SUCCESS\n* FAILURE\n* PENDING\n* REJECTED",
+                        "example": "SUCCESS"
+                    }
+                }
+            },
+            "StartTransactionResponse": {
                 "required": [
-                    "cardId",
+                    "count",
+                    "data",
+                    "httpStatusCode",
+                    "requestId"
+                ],
+                "type": "object",
+                "properties": {
+                    "requestId": {
+                        "title": "Request id",
+                        "type": "string",
+                        "example": "1234567"
+                    },
+                    "messages": {
+                        "title": "List of additional messages",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Message"
+                        }
+                    },
+                    "httpStatusCode": {
+                        "title": "Http status code",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 200
+                    },
+                    "count": {
+                        "title": "Number of entities returned",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                    },
+                    "data": {
+                        "title": "Entities data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StartTransaction"
+                        }
+                    }
+                }
+            },
+            "StartTransactionByCardNumberRequest": {
+                "required": [
+                    "cardNumber",
                     "reason"
                 ],
                 "type": "object",
                 "properties": {
-                    "cardId": {
-                        "title": "Card ID",
-                        "type": "integer",
-                        "description": "The unique identifier of the RFID card",
-                        "format": "int64",
-                        "example": 123123
+                    "cardNumber": {
+                        "title": "Card number",
+                        "type": "string",
+                        "description": "The number of the RFID card",
+                        "example": "123123"
                     },
                     "reason": {
                         "title": "Reason",
@@ -1292,39 +2125,7 @@
                         ]
                     }
                 },
-                "description": "Start transaction message"
-            },
-            "StopTransactionRequest": {
-                "required": [
-                    "cardId",
-                    "reason"
-                ],
-                "type": "object",
-                "properties": {
-                    "cardId": {
-                        "title": "Card ID",
-                        "type": "integer",
-                        "description": "The unique identifier of the RFID card",
-                        "format": "int64",
-                        "example": 123123
-                    },
-                    "reason": {
-                        "title": "Reason",
-                        "pattern": "(MAX_CHARGE_DURATION_REACHED|GIREVE_METER_LIMIT_REACHED|CONCURRENT_CHARGING|MAX_CHARGE_KWH_REACHED|BEFORE_RESERVATION|EMERGENCY_STOP)",
-                        "type": "string",
-                        "description": "The reason for stopping charging. Options are:\n* MAX_CHARGE_DURATION_REACHED\n* GIREVE_METER_LIMIT_REACHED\n* CONCURRENT_CHARGING\n* MAX_CHARGE_KWH_REACHED\n* BEFORE_RESERVATION\n* EMERGENCY_STOP",
-                        "example": "MAX_CHARGE_DURATION_REACHED",
-                        "enum": [
-                            "MAX_CHARGE_DURATION_REACHED",
-                            "GIREVE_METER_LIMIT_REACHED",
-                            "CONCURRENT_CHARGING",
-                            "MAX_CHARGE_KWH_REACHED",
-                            "BEFORE_RESERVATION",
-                            "EMERGENCY_STOP"
-                        ]
-                    }
-                },
-                "description": "Stop transaction message"
+                "description": "Start transaction with card number message"
             },
             "EvTransaction": {
                 "type": "object",
